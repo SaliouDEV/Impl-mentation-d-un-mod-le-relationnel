@@ -1,0 +1,35 @@
+**************INSERTION DES DONNÉES***************
+
+INSERT INTO Clients (Nom_Clients,Adresse) VALUES 
+   ('Ahmed','Tunisie'),
+   ('Coulibaly','Sénégal'),
+   ('Hasan','Egypte');
+INSERT INTO Produits (Nom_Produit,Prix) VALUES
+   ('Cookies','10'),
+   ('Candy','5,2');
+INSERT INTO Commandes (Commande_id,Produit_id,Quantité,Commande_date) VALUES
+   (1,2,3,'2023-01-22'),
+   (2,1,10,'2023-04-14');
+
+
+
+***************MISE A JOUR DE LA DEUXIEME LIGNE DE LA TABLE COMMANDE**************
+
+UPDATE Commandes SET Quantité='6' WHERE Commande_id= 2; 
+
+
+
+***************SUPPRESSION DU TROISIEME CLIENT DE LA TABLE CLIENTS****************
+
+DELETE FROM Clients WHERE Nom_Clients='Hasan';
+
+
+
+
+***************SUPPRESSION DE TOUTES LES LIGNES ET DE LA TABLE COMMANDES**************
+DELETE FROM Commandes;
+ALTER TABLE Commandes DROP PRIMARY KEY;
+ALTER TABLE Commandes DROP FOREIGN KEY CliendID_FK;
+ALTER TABLE Commandes DROP FOREIGN KEY ProduitID_FK;
+DROP TABLE Commandes;
+
