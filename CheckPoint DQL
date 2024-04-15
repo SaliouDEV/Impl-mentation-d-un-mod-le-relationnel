@@ -1,1 +1,174 @@
+*********************************Implémentez le modèle de relation fourni en utilisant SQL (partie DDL)************
+CREATE TABLE Client(
+Client_id INT NOT NULL PRIMARY KEY,
+Nom_client VARCHAR(50) NOT NULL,
+Tel_client INT NOT NULL);
 
+ALTER TABLE Client ADD CONSTRAINT ClientID_PK PRIMARY KEY (Client_id)
+ALTER TABLE Client
+AlTER COLUMN Client_id NOT NULL,
+ALTER COLUMN Nom_client NOT NULL,
+ALTER COLUMN TEL_client NOT NULL;
+
+CREATE TABLE Produit(
+Produit_id INT NOT NULL PRIMARY KEY,
+Nom_produit VARCHAR(50) NOT NULL,
+Categorie VARCGAR(50) NOT NULL,
+Prix DECIMAL NOT NULL CHECK(Prix>0));
+
+ALTER TABLE Produit ADD CONSTRAINT ProduitID_PK PRIMARY KEY (Produit_id);
+ALTER TABLE Produit ADD CONSTRAINT Prix_CK CHECK (Prix>0);
+ALTER TABLE Produit
+ALTER COLUMN Produit_id NOT NULL,
+ALTER COLUMN Nom_produit NOT NULL,
+ALTER COLUMN Categorie NOT NULL,
+ALTER COLUMN Prix NOT NULL;
+
+CREATE TABLE Commande(
+Client_id INT NOT NULL FOREIGN KEY,
+Produit_id INT NOT NULL FOREIGN KEY,
+Commande_date DATE NOT NULL,
+Quantité INT NOT NULL, 
+Montat_total DECIMAL NOT NULL);
+
+ALTER TABLE Commande ADD CONSTRAINT CliendID_FK FOREIGN KEY (Client_id) REFERENCES Client (CLient_id);
+ALTER TABLE Commande ADD CONSTRANT ProduitID_FK FOREIGN KEY (Produit_id) REFERENCES Produit (Produit_id);
+ALTER TABLE Commande 
+ALTER COLUMN Client_id NOT NULL,
+ALTER COLUMN Produit_id NOT NULL,
+ALTER COLUMN Commande_date NOT NULL,
+ALTER COLUMN Quantité NOT NULL,
+ALTER COLUMN Montant_total NOT NULL;
+
+
+*****************************INSERTION DES DONNÉES*********************
+INSERT INTO Client VALUES
+(1,'Gueye','776548765'),
+(2,'Mbaye','779054323'),
+(3,'Fall','765687412'),
+(4,'Ndoye','779543451'),
+(5,'Cisse','777287019'),
+(6,'Diallo','770906712'),
+(7,'Diagne','774446756'),
+(8,'Diop','761230976'),
+(9,'Mbengue','778765432'),
+(10,'Ndiaye','774652128');
+
+INSERT INTO Produit VALUES
+(1, 'TurboGizmo', 'Gadget', 10.99),
+(2, 'QuantumWidget', 'Widget', 15.50),
+(3, 'HyperDoohickey', 'Doohickey', 8.75),
+(4, 'NanoFusion', 'Gadget', 12.25),
+(5, 'X-StreamWidget', 'Widget', 20.00),
+(6, 'ElectroPulse', 'Doohickey', 11.99),
+(7, 'UltraGyro', 'Gadget', 14.75),
+(8, 'NovaDrive', 'Widget', 18.25),
+(9, 'TitanTwister', 'Doohickey', 9.99),
+(10, 'SonicWave', 'Gadget', 13.50),
+(11, 'QuantumQuasar', 'Widget', 22.75),
+(12, 'PlasmaBlitz', 'Doohickey', 10.49),
+(13, 'MegaRift', 'Gadget', 16.99),
+(14, 'InfinityCircuit', 'Widget', 25.00),
+(15, 'NanoFusion', 'Doohickey', 11.25),
+(16, 'HyperDrive', 'Gadget', 18.75),
+(17, 'X-StreamBoost', 'Widget', 30.50),
+(18, 'QuantumPulse', 'Doohickey', 13.99),
+(19, 'HyperBlade', 'Gadget', 17.25),
+(20, 'TurboMax', 'Widget', 35.75);
+
+INSERT INTO Commande VALUES
+(1, 3, '2024-04-01', 2, 17.50),
+(1, 12, '2024-04-03', 3, 31.47),
+(2, 7, '2024-04-02', 1, 14.75),
+(2, 18, '2024-04-04', 2, 27.98),
+(3, 25, '2024-04-05', 1, 22.75),
+(3, 30, '2024-04-06', 4, 91.00),
+(4, 5, '2024-04-07', 2, 40.00),
+(4, 11, '2024-04-08', 1, 22.75),
+(5, 17, '2024-04-09', 3, 91.50),
+(5, 22, '2024-04-10', 2, 41.00),
+(6, 28, '2024-04-11', 1, 25.25),
+(6, 6, '2024-04-12', 4, 47.96),
+(7, 13, '2024-04-13', 1, 16.99),
+(7, 19, '2024-04-14', 2, 34.50),
+(8, 26, '2024-04-15', 3, 136.50),
+(8, 2, '2024-04-16', 1, 15.50),
+(9, 8, '2024-04-17', 2, 36.50),
+(9, 14, '2024-04-18', 1, 25.00),
+(10, 20, '2024-04-19', 3, 107.25),
+(10, 27, '2024-04-20', 2, 41.98);
+
+
+******************EXECUTION DES REQUETES***********************
+
+3) SELECT Nom_client,
+       SUM(CASE WHEN Produit.Categorie = 'Widget' THEN Quantité * Produit.prix ELSE 0 END) AS cout_total_widgets,
+       SUM(CASE WHEN Produiyt.Categorie = 'Gadget' THEN Quantité * Produit.prix ELSE 0 END) AS cout_total_gadgets
+FROM client 
+JOIN Commande ON Client.Client_id = Commande.Client_id
+JOIN Produit  ON Commande.Produit_ID = Produit.Produit_ID
+WHERE Produit.Categorie IN ('Widget', 'Gadget')
+GROUP BY Client.Nom_client
+HAVING SUM(CASE WHEN Produit.Categorie = 'Widget' THEN 1 ELSE 0 END) >= 1
+   AND SUM(CASE WHEN Produit.Categorie = 'Gadget' THEN 1 ELSE 0 END) >= 1;
+
+4)SELECT Nom_client,SUM(CASE WHEN Produit.Categorie = 'Widget' THEN Quantité * Produit.Prix ELSE 0 END) AS cout_total_widgets
+FROM Client
+JOIN Commande ON Client.Client_id = Commande.Client_id
+JOIN Produit ON Commande.Produit_id = Produit.Produit_id
+WHERE Produit.Categorie = 'Widget'
+GROUP BY Client.Nom_client HAVING SUM(CASE WHEN Produit.Categorie = 'Widget' THEN 1 ELSE 0 END) >= 1
+
+
+5)SELECT Nom_client,SUM(CASE WHEN Produit.Categorie = 'Gadget' THEN Quantité * Produit.Prix ELSE 0 END) AS cout_total_gadgets
+FROM Client
+JOIN Commande ON Client.Client_id = Commande.Client_id
+JOIN Produit ON Commande.Produit_id = Produit.Produit_id
+WHERE Produit.Categorie = 'Gadget'
+GROUP BY Client.Nom_client HAVING SUM(CASE WHEN Produit.Categorie = 'Gadget' THEN 1 ELSE 0 END) >= 1
+
+6)SELECT Nom_client,SUM(CASE WHEN Produit.Categorie = 'Doohickey' THEN Quantité * Produit.Prix ELSE 0 END) AS cout_total_gadgets
+FROM Client
+JOIN Commande ON Client.Client_id = Commande.Client_id
+JOIN Produit ON Commande.Produit_id = Produit.Produit_id
+WHERE Produit.Categorie = 'Doohickey'
+GROUP BY Client.Nom_client HAVING SUM(CASE WHEN Produit.Categorie = 'Doohickey' THEN 1 ELSE 0 END) >= 1
+
+7)SELECT Nom_client,
+       SUM(CASE WHEN Produit.Categorie = 'Widget' THEN Commande.Quantité  ELSE 0 END),
+       SUM(CASE WHEN Produit.Categorie = 'Gadget' THEN Commande.Quantité  ELSE 0 END),
+       SUM( Commande.Produit_id * Produit.Prix) as Cout_total_Commandes
+    FROM Client
+    JOIN Commande ON Client.Client_id = Commande.Client_id
+    JOIN Produit ON Commande.Produit_id = Produit.Produit_id 
+    GROUP BY Client.Nom_client
+
+8)SELECT Nom_produit, COUNT(Commande.Quantité) as Quantités_total
+    FROM Produit
+    JOIN Commande ON Produit.Produit_id = Commande.Produit_id
+    GROUP BY Produit.Nom_produit 
+    HAVING SUM(Commande.Quantité)>=1
+
+9)SELECT Nom_client, COUNT(*) AS nombre_total_commandes
+   FROM Client
+   JOIN Commande ON Commande.Client_id=Client.Client_id
+   GROUP BY Client.Nom_client
+   ORDER BY COUNT(*) DESC
+
+10)
+SELECT Nom_produit,COUNT(*) as nombre_total_produits
+   FROM Produit
+   JOIN Commande ON Commande.Produit_id = Produit.Produit_id
+   GROUP BY Nom_produit
+   ORDER BY COUNT(*) DESC
+
+
+11) SELECT nom_client, COUNT(*) AS nombre_total_commandes, DAY(Commande.Commande_date) AS jour_semaine
+FROM Client
+JOIN Commande  ON Client.client_ID = Commande.Client_ID
+GROUP BY Client.Nom_client, DAY(Commande.Commande_date)
+HAVING COUNT(*) = (
+    SELECT COUNT(DISTINCT DAY(Commande_date))
+    FROM Commande
+)
+ORDER BY DAY(Commande.Commande_date);
