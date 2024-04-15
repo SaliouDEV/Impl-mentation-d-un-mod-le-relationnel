@@ -4,7 +4,7 @@ CREATE TABLE Producer(
     Lastname VARCHAR(50),
     Region VARCHAR(50),
     PRIMARY KEY(Num_producer)
-)
+);
 
 
 CREATE TABLE Wine(
@@ -15,7 +15,7 @@ CREATE TABLE Wine(
     Num_producer INT,
     Litres INT,
     PRIMARY KEY (Num_wine)
-)
+);
 
 INSERT INTO Producer 
 VALUES
@@ -99,10 +99,10 @@ ALTER TABLE Wine with NOCHECK ADD CONSTRAINT Numproducer_FK FOREIGN KEY (Num_pro
 
 6)SELECT * FROM Producer WHERE Region = 'Sousse';
 
-7)SELECT Num_producer,SUM(Litres) AS Nombte_total FROM Wine WHERE Num_producer = 12 GROUP BY Num_producer
+7)SELECT Num_producer,SUM(Litres) AS Nombte_total FROM Wine WHERE Num_producer = 12 GROUP BY Num_producer;
 
-8) SELECT Categorie, SUM(Litres) AS Total_litres From Wine GROUP BY Categorie
+8) SELECT Categorie, SUM(Litres) AS Total_litres From Wine GROUP BY Categorie;
 
-9)SELECT Fistname,Lastname FRom Producer JOIN Wine ON Wine.Num_producer= Producer.Num_producer WHERE Litres >= 300
+9)SELECT Fistname,Lastname FRom Producer JOIN Wine ON Wine.Num_producer= Producer.Num_producer WHERE Litres >= 300;
 
-10)SELECT Num_wine FROM Wine WHERE Degree >12 AND Num_producer = 24 
+10)SELECT Num_wine FROM Wine WHERE Degree >12 AND Num_producer = 24 ;
