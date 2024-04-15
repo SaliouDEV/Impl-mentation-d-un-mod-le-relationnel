@@ -1,0 +1,108 @@
+CREATE TABLE Producer(
+    Num_producer INT,
+    Fistname VARCHAR(50),
+    Lastname VARCHAR(50),
+    Region VARCHAR(50),
+    PRIMARY KEY(Num_producer)
+)
+
+
+CREATE TABLE Wine(
+    Num_wine INT,
+    Categorie VARCHAR(50),
+    Année INT,
+    Degree INT,
+    Num_producer INT,
+    Litres INT,
+    PRIMARY KEY (Num_wine)
+)
+
+INSERT INTO Producer 
+VALUES
+(1, 'Jean', 'Dupont', 'Bordeaux'),
+(2, 'Marie', 'Martin', 'Bourgogne'),
+(3, 'Pierre', 'Durand', 'Champagne'),
+(4, 'Sophie', 'Dubois', 'Alsace'),
+(5, 'Luc', 'Leroy', 'Provence'),
+(6, 'Thomas', 'Lambert', 'Vallée du Rhône'),
+(7, 'Emma', 'Lefevre', 'Sousse'),
+(8, 'Louis', 'Roussel', 'Loire Valley'),
+(9, 'Camille', 'Moreau', 'Sud-Ouest'),
+(10, 'Alexandre', 'Girard', 'Corse'),
+(11, 'Charlotte', 'Petit', 'Savoie'),
+(12, 'Nicolas', 'Bonnet', 'Jura'),
+(13, 'Mathilde', 'Robin', 'Beaujolais'),
+(14, 'Julien', 'Rousseau', 'Côtes du Rhône'),
+(15, 'Elodie', 'Lecomte', 'Lorraine'),
+(16, 'Philippe', 'Martin', 'Rhône-Alpes'),
+(17, 'Caroline', 'Laurent', 'Poitou-Charentes'),
+(18, 'Sébastien', 'Garcia', 'Limousin'),
+(19, 'Emilie', 'Leroux', 'Auvergne'),
+(20, 'David', 'Mercier', 'Bretagne'),
+(21, 'Anne', 'Dupuis', 'Sousse'),
+(22, 'Marc', 'Morel', 'Sousse'),
+(23, 'Sandrine', 'Giraud', 'Sousse'),
+(24, 'Olivier', 'Roux', 'Sousse'),
+(25, 'Céline', 'Lemoine', 'Sousse');
+
+
+INSERT INTO Wine 
+VALUES
+(1, 'Rouge', 2018, 12.5, 1, 150),
+(2, 'Blanc', 2019, 11.0, 2, 100),
+(3, 'Rosé', 2020, 10.2, 3, 200),
+(4, 'Rouge', 2017, 13.2, 4, 180),
+(5, 'Blanc', 2018, 10.8, 5, 220),
+(6, 'Rosé', 2019, 11.5, 6, 250),
+(7, 'Rouge', 2020, 12.0, 7, 300),
+(8, 'Blanc', 2017, 11.2, 8, 130),
+(9, 'Rosé', 2018, 10.7, 9, 180),
+(10, 'Rouge', 2019, 12.8, 10, 160),
+(11, 'Blanc', 2020, 11.4, 11, 190),
+(12, 'Rosé', 2017, 10.9, 12, 210),
+(13, 'Rouge', 2018, 12.3, 13, 220),
+(14, 'Blanc', 2019, 11.1, 14, 180),
+(15, 'Rosé', 2020, 10.5, 15, 300),
+(16, 'Rouge', 2017, 13.0, 16, 250),
+(17, 'Blanc', 2018, 11.5, 17, 280),
+(18, 'Rosé', 2019, 10.8, 18, 170),
+(19, 'Rouge', 2020, 12.2, 19, 200),
+(20, 'Blanc', 2017, 11.0, 20, 150),
+(21, 'Rosé', 2018, 11.7, 21, 260),
+(22, 'Rouge', 2019, 12.5, 22, 280),
+(23, 'Blanc', 2020, 11.3, 23, 320),
+(24, 'Rosé', 2017, 11.0, 24, 190),
+(25, 'Rouge', 2018, 12.0, 25, 300),
+(26, 'Blanc', 2019, 11.2, 1, 170),
+(27, 'Rosé', 2020, 10.6, 2, 240),
+(28, 'Rouge', 2017, 13.5, 3, 280),
+(29, 'Blanc', 2018, 11.8, 4, 190),
+(30, 'Rosé', 2019, 10.9, 5, 210),
+(31, 'Rouge', 2020, 12.3, 6, 230),
+(32, 'Blanc', 2017, 10.5, 7, 200),
+(33, 'Rosé', 2018, 11.0, 8, 220),
+(34, 'Rouge', 2019, 12.0, 9, 280),
+(35, 'Blanc', 2020, 11.5, 10, 300),
+(36, 'Rosé', 2017, 10.7, 11, 190),
+(37, 'Rouge', 2018, 12.5, 12, 320),
+(38, 'Blanc', 2019, 11.1, 13, 180),
+(39, 'Rosé', 2020, 10.8, 14, 240),
+(40, 'Rouge', 2017, 13.2, 15, 260);
+
+ALTER TABLE Wine with NOCHECK ADD CONSTRAINT Numproducer_FK FOREIGN KEY (Num_producer) REFERENCES Producer (Num_producer);
+
+********************REQUETES************
+
+4) SELECT * FROM Producer;
+
+5)SELECT * FROM Producer ORDER BY Lastname;
+
+6)SELECT * FROM Producer WHERE Region = 'Sousse';
+
+7)SELECT Num_producer,SUM(Litres) AS Nombte_total FROM Wine WHERE Num_producer = 12 GROUP BY Num_producer
+
+8) SELECT Categorie, SUM(Litres) AS Total_litres From Wine GROUP BY Categorie
+
+9)SELECT Fistname,Lastname FRom Producer JOIN Wine ON Wine.Num_producer= Producer.Num_producer WHERE Litres >= 300
+
+10)SELECT Num_wine FROM Wine WHERE Degree >12 AND Num_producer = 24 
